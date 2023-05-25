@@ -18,14 +18,30 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Git Semantic Version
+      uses: PaulHatch/semantic-version@v4.0.3
+      with:
+        major_pattern: "major:"
+        minor_pattern: "feat:"
+        format: "${major}.${minor}.${patch}-prerelease${increment}"
+      id: version
+        
+
+
     - name: Docker login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: echo "Version $NEW_VERSION"
+#       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     
-    - name: Build image
-      run: docker build -t alejobonadeo/docker-deploy-test:0.0.2 .
+#     - name: Build image
+#       run: | 
+#         docker build -t alejobonadeo/docker-deploy-test:0.0.2 .
+#         docker build -t alejobonadeo/docker-deploy-test:latest .
 
-    - name: Push image
-      run: docker push alejobonadeo/docker-deploy-test:0.0.2
+#     - name: Push image
+#       run: | 
+#         docker push alejobonadeo/docker-deploy-test:0.0.2
+#         docker push alejobonadeo/docker-deploy-test:latest
