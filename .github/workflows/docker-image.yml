@@ -28,4 +28,4 @@ jobs:
       run: docker build -t alejobonadeo/docker-deploy-test:0.0.2 .
 
     - name: Push image
-      run: docker push alejobonadeo/docker-deploy-test:0.0.2 .
+      run: docker push alejobonadeo/docker-deploy-test:0.0.2
